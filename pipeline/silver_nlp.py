@@ -17,8 +17,7 @@ Stratégie d'extraction :
 
 Sortie : DataFrame long format (1 ligne = 1 compétence dans 1 offre)
 
-Auteur : [Ton Nom]
-Date   : Novembre 2024
+
 =============================================================
 """
 

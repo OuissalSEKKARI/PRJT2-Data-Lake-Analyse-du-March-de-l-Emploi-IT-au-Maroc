@@ -2,16 +2,7 @@
 =============================================================
 BRONZE INGESTION — Mexora RH Intelligence
 =============================================================
-Rôle : Charger les données brutes dans la zone Bronze
-SANS AUCUNE MODIFICATION.
 
-Principe fondamental : la zone Bronze est IMMUABLE.
-C'est l'archive fidèle de ce qui a été reçu depuis
-les sources (Rekrute, MarocAnnonce, LinkedIn).
-
-Auteur : [Ton Nom]
-Date   : Novembre 2024
-=============================================================
 """
 
 import json

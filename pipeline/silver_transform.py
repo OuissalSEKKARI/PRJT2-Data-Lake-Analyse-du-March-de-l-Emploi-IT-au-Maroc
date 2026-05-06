@@ -15,8 +15,6 @@ Transformations appliquées :
 
 Format de sortie : Parquet (compressé Snappy)
 
-Auteur : [Ton Nom]
-Date   : Novembre 2024
 =============================================================
 """
 
