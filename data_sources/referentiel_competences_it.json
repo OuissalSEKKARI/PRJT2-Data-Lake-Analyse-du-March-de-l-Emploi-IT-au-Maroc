@@ -1,0 +1,80 @@
+{
+  "familles": {
+    "langages": {
+      "python": ["python", "python3", "py"],
+      "javascript": ["javascript", "js", "node.js", "nodejs", "node"],
+      "java": ["java", "java8", "java11", "java17"],
+      "sql": ["sql", "mysql", "postgresql", "postgres", "oracle", "tsql"],
+      "r": ["r", "rlang", "r-studio"],
+      "typescript": ["typescript", "ts"],
+      "php": ["php", "php7", "php8"],
+      "csharp": ["c#", ".net", "dotnet"],
+      "kotlin": ["kotlin"],
+      "swift": ["swift"],
+      "scala": ["scala"],
+      "go": ["golang", "go"]
+    },
+    "frameworks_web": {
+      "react": ["react", "reactjs", "react.js"],
+      "angular": ["angular", "angularjs"],
+      "django": ["django", "django rest"],
+      "spring": ["spring", "spring boot", "springboot"],
+      "laravel": ["laravel"],
+      "vue": ["vue", "vuejs", "vue.js"],
+      "flask": ["flask"],
+      "fastapi": ["fastapi", "fast api"]
+    },
+    "data_engineering": {
+      "spark": ["spark", "apache spark", "pyspark"],
+      "kafka": ["kafka", "apache kafka"],
+      "airflow": ["airflow", "apache airflow"],
+      "dbt": ["dbt", "data build tool"],
+      "hadoop": ["hadoop", "hdfs", "mapreduce"],
+      "flink": ["flink", "apache flink"],
+      "nifi": ["nifi", "apache nifi"],
+      "hive": ["hive", "apache hive"]
+    },
+    "cloud": {
+      "aws": ["aws", "amazon web services", "ec2", "s3", "lambda"],
+      "gcp": ["gcp", "google cloud", "bigquery", "cloud storage"],
+      "azure": ["azure", "microsoft azure", "synapse"]
+    },
+    "bi_analytics": {
+      "power_bi": ["power bi", "powerbi", "pbi"],
+      "tableau": ["tableau", "tableau desktop"],
+      "metabase": ["metabase"],
+      "looker": ["looker", "looker studio"],
+      "qlik": ["qlik", "qlikview", "qliksense"]
+    },
+    "machine_learning": {
+      "tensorflow": ["tensorflow", "tf"],
+      "pytorch": ["pytorch", "torch"],
+      "sklearn": ["scikit-learn", "sklearn"],
+      "mlflow": ["mlflow"],
+      "pandas": ["pandas"],
+      "numpy": ["numpy"]
+    },
+    "devops": {
+      "docker": ["docker", "dockerfile", "docker-compose"],
+      "kubernetes": ["kubernetes", "k8s", "kubectl"],
+      "terraform": ["terraform"],
+      "ansible": ["ansible"],
+      "jenkins": ["jenkins", "ci/cd", "cicd"],
+      "git": ["git", "github", "gitlab", "bitbucket"],
+      "linux": ["linux", "unix", "bash", "shell"]
+    },
+    "bases_de_donnees": {
+      "mongodb": ["mongodb", "mongo"],
+      "redis": ["redis"],
+      "elasticsearch": ["elasticsearch", "elastic", "elk"],
+      "cassandra": ["cassandra", "apache cassandra"],
+      "neo4j": ["neo4j", "graph database"]
+    },
+    "methodologies": {
+      "agile": ["agile", "scrum", "kanban", "sprint"],
+      "rest_api": ["rest", "rest api", "restful", "api"],
+      "microservices": ["microservices", "micro-services"],
+      "devops_culture": ["devops", "sre", "site reliability"]
+    }
+  }
+}
