@@ -6,19 +6,18 @@ Orchestration complète du pipeline de données :
   1. Ingestion Bronze (données brutes)
   2. Transformation Silver (nettoyage + standardisation)
   3. Extraction compétences Silver NLP
-  (La partie Gold est gérée par ta binôme)
+  4. Agrégation Gold (statistiques + enrichissements)
 
 Usage :
   python main.py
 
-Auteur : [Ton Nom]
-Date   : Novembre 2024
 =============================================================
 """
 
 import sys
 from pathlib import Path
 from datetime import datetime
+from pipeline.gold_aggregation import construire_gold, verifier_gold
 
 # Ajout du répertoire pipeline au path
 sys.path.insert(0, str(Path(__file__).parent / 'pipeline'))
@@ -76,6 +75,15 @@ def main():
     chemin_comp = sauvegarder_silver_competences(df_comp, str(LAKE))
 
     # ────────────────────────────────────────────────────────────
+    # ÉTAPE 4 : GOLD AGGREGATION
+    # ────────────────────────────────────────────────────────────
+
+    print("\n\n🏆 ÉTAPE 4/4 : AGRÉGATION GOLD")
+    print("-" * 40)
+    stats_gold = construire_gold(str(LAKE))
+    verifier_gold(str(LAKE))
+
+    # ────────────────────────────────────────────────────────────
     # RAPPORT FINAL
     # ────────────────────────────────────────────────────────────
     generer_rapport_pipeline(stats_bronze, df_silver, df_comp, BASE_DIR)
@@ -88,7 +96,6 @@ def main():
     print(f"    Bronze  → {LAKE}/bronze/  (partitions JSON)")
     print(f"    Silver  → {chemin_silver}")
     print(f"    Silver  → {chemin_comp}")
-    print(f"\n  La zone Gold doit être construite par la binôme.")
     print(f"  Utiliser : python pipeline/gold_aggregation.py\n")
 
 

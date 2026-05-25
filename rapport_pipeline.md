@@ -1,6 +1,6 @@
 # Rapport Pipeline — Mexora RH Intelligence Data Lake
 
-Généré le : 2026-05-04 18:51:09
+Généré le : 2026-05-25 15:28:48
 
 ---
 
@@ -10,7 +10,7 @@ Généré le : 2026-05-04 18:51:09
 |---|---|
 | Offres ingérées | 5,000 |
 | Partitions créées | 69 |
-| Date ingestion | 2026-05-04T18:51:01 |
+| Date ingestion | 2026-05-25T15:27:00 |
 
 ### Répartition par source
 | Source | Offres |
@@ -122,11 +122,11 @@ Non classifiés conservés comme `"Autre IT"` avec flag pour audit.
 
 | Métrique | Valeur |
 |---|---|
-| Lignes compétences générées | 32,227 |
+| Lignes compétences générées | 35,042 |
 | Offres avec ≥1 compétence | 5,000 |
 | Offres sans compétence détectée | 0 |
-| Compétences uniques détectées | 48 |
-| Moyenne compétences par offre | 6.4 |
+| Compétences uniques détectées | 70 |
+| Moyenne compétences par offre | 7.0 |
 
 ### Top 10 compétences
 

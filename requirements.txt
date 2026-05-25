@@ -1,0 +1,17 @@
+# Mexora RH Intelligence — Data Lake
+# Pipeline: Bronze / Silver / Gold + Analyse
+# Install: pip install -r requirements.txt
+
+# ── Core data ────────────────────────────────
+pandas>=2.0
+pyarrow>=12.0
+duckdb>=0.9
+
+# ── Analysis & visualisation ─────────────────
+matplotlib>=3.7
+seaborn>=0.12
+plotly>=5.15
+
+# ── Notebook ─────────────────────────────────
+jupyter>=1.0
+ipykernel>=6.0
