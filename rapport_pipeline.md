@@ -153,3 +153,92 @@ Non classifiés conservés comme `"Autre IT"` avec flag pour audit.
 - `"node"` vs `"node.js"` : résolu par tri longueur décroissante
 - Séparateurs variés (`/`, `•`, `;`) : nettoyés avant matching
 - Offres sans description : traçées comme `non_détecté`
+
+---
+
+## 4. Agrégation Gold — Tables analytiques
+
+| Métrique | Valeur |
+|---|---|
+| Tables Gold produites | 5 |
+| Lignes analytiques générées | 3,507 |
+| Format de sortie | Parquet Snappy |
+| Moteur d'agrégation | DuckDB SQL |
+| Source offres | `data_lake/silver/offres_clean/offres_clean.parquet` |
+| Source compétences | `data_lake/silver/competences_extraites/competences.parquet` |
+
+**Objectif** : transformer les données Silver nettoyées en tables pré-agrégées directement exploitables par le notebook analytique, DuckDB et les dashboards RH.
+
+### 4.1 Tables produites
+
+| Table | Lignes | Colonnes | Usage analytique |
+|---|---:|---:|---|
+| `top_competences.parquet` | 409 | 6 | Compétences les plus demandées par profil |
+| `salaires_par_profil.parquet` | 357 | 11 | Statistiques salariales par profil, ville et contrat |
+| `offres_par_ville.parquet` | 2,275 | 8 | Volume d'offres par ville, profil et mois |
+| `entreprises_recruteurs.parquet` | 100 | 8 | Classement des entreprises les plus recruteuses |
+| `tendances_mensuelles.parquet` | 366 | 7 | Évolution mensuelle des volumes et salaires |
+
+### 4.2 Top compétences par profil
+
+| Colonne clé | Description |
+|---|---|
+| `profil` | Profil IT normalisé |
+| `famille` | Famille de compétence |
+| `competence` | Compétence détectée |
+| `nb_offres_mentionnent` | Nombre d'offres distinctes mentionnant la compétence |
+| `pct_offres_total` | Part de la compétence dans l'ensemble des offres |
+| `rang_dans_profil` | Rang de la compétence à l'intérieur du profil |
+
+**Règle** : agrégation sur les compétences détectées uniquement (`competence != 'non_détecté'`).
+Le rang est calculé par fenêtre SQL `RANK()` sur chaque profil, en ordre décroissant du nombre d'offres.
+
+### 4.3 Salaires par profil
+
+| Indicateur | Description |
+|---|---|
+| `nb_offres` | Volume total dans le segment profil/ville/contrat |
+| `nb_offres_avec_salaire` | Offres avec salaire exploitable |
+| `salaire_median_mad` | Médiane des salaires en MAD |
+| `salaire_moyen_mad` | Moyenne des salaires en MAD |
+| `salaire_q1_mad`, `salaire_q3_mad` | Quartiles salariaux |
+| `salaire_min_observe`, `salaire_max_observe` | Bornes observées après nettoyage |
+
+**Règle** : regroupement par `profil_normalise`, `ville_std` et `type_contrat_std`.
+Les segments trop petits sont exclus avec `HAVING COUNT(*) >= 5` pour éviter des statistiques peu robustes.
+
+### 4.4 Offres par ville et tendances
+
+| Table | Grain analytique | KPIs |
+|---|---|---|
+| `offres_par_ville.parquet` | Ville × profil × année × mois | `nb_offres`, `nb_offres_remote`, `pct_remote` |
+| `tendances_mensuelles.parquet` | Année × mois × profil | `nb_offres`, `salaire_moyen_mois`, `evolution_pct` |
+
+**Règles** :
+- le remote est détecté par mots-clés dans le champ `teletravail` : `télétravail`, `remote`, `hybride`
+- l'évolution mensuelle est calculée avec `LAG()` par profil
+- les lignes sans `annee` ou `mois` sont exclues des tendances temporelles
+
+### 4.5 Entreprises recruteurs
+
+| Indicateur | Description |
+|---|---|
+| `nb_offres_publiees` | Volume d'offres publiées par entreprise et ville |
+| `nb_profils_differents` | Diversité des profils recrutés |
+| `salaire_moyen_propose` | Salaire moyen proposé lorsque connu |
+| `profils_recrutes` | Liste distincte des profils recrutés |
+| `premiere_offre`, `derniere_offre` | Fenêtre temporelle d'activité observée |
+
+**Règle** : seules les entreprises non vides avec au moins 3 offres sont conservées.
+La table est limitée au Top 100 des recruteurs par volume d'offres.
+
+### 4.6 Contrôles post-construction
+
+| Contrôle | Résultat |
+|---|---|
+| Existence des 5 fichiers Parquet | OK |
+| Lecture DuckDB de chaque table | OK |
+| Comptage des lignes | OK |
+| Vérification des colonnes attendues | OK |
+
+**Sortie finale** : les tables Gold sont stockées dans `data_lake/gold/` et servent de couche de consommation pour `analysis/analyse_marche_it_maroc.ipynb`.
